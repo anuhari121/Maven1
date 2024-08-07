@@ -3,46 +3,44 @@ pipeline
     agent any
     stages
     {
-        stage('ContinuousDownload')
+        stage('continoud download')
         {
             steps
             {
                 git 'https://github.com/anuhari121/Maven1.git'
             }
-        }
-        stage('ContinuousBuild')
+        }    
+        stage('continous Downloads')
         {
             steps
             {
                 sh 'mvn package'
             }
+            
         }
-        stage('ContinuousDeployment')
+        stage('Continous Deployment')
         {
             steps
             {
-                deploy adapters: [tomcat9(credentialsId: '8cc7d40a-bab0-438d-8dc2-f0d886815228', path: '', url: 'http://172.31.16.84:8080')], contextPath: 'test1', war: '**/*.war'
+                deploy adapters: [tomcat9(credentialsId: 'db81c5d4-1c6a-476a-8d44-1ac99b9c5309', path: '', url: 'http://172.31.29.8:8080')], contextPath: 'test', war: '**/*.war'
             }
         }
-        stage('ContinuousTesting')
+        stage('Countinous Testing')
         {
             steps
             {
                 git 'https://github.com/intelliqittrainings/FunctionalTesting.git'
-                sh 'java -jar /home/ubuntu/.jenkins/workspace/DeclarativePipeline/testing.jar'
+                sh 'java -jar /var/lib/jenkins/workspace/h11/testing.jar'
             }
         }
-        stage('ContinuosuDelivery')
+        stage('continous Delevary')
         {
             steps
             {
-              input message: 'Waiting for Approval from the DM!', submitter: 'srinivas'
-              deploy adapters: [tomcat9(credentialsId: '8cc7d40a-bab0-438d-8dc2-f0d886815228', path: '', url: 'http://172.31.29.58:8080')], contextPath: 'prod1', war: '**/*.war'  
+                deploy adapters: [tomcat9(credentialsId: 'db81c5d4-1c6a-476a-8d44-1ac99b9c5309', path: '', url: 'http://172.31.23.157:8080')], contextPath: 'app', war: '**/*.war'
             }
         }
         
         
-        
     }
-}
-
+}  
